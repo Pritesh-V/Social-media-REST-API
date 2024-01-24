@@ -2,12 +2,18 @@ package com.rest.webservices.restfulwebservices.user;
 
 import java.time.LocalDate;
 
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
 
 public class User {
 
-	
+	@Id
 	 private Integer id ;
+	@Size(min = 2 ,message = "name should have  minumum 2 characters required")
 	 private String name ;
+	@Past(message = "birthdate should be in the  paste")
 	 private LocalDate birthdate;
 	 
 	 public User() {
