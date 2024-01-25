@@ -1,28 +1,40 @@
 package com.rest.webservices.restfulwebservices.user;
 
 import java.time.LocalDate;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Size;
 
-
+@Entity( name = "user_details")
 public class User {
-
-	@Id
-	 private Integer id ;
-	@Size(min = 2 ,message = "name should have  minumum 2 characters required")
-	@JsonProperty("user_name")
-	 private String name ;
-	@Past(message = "birthdate should be in the  paste")
-	@JsonProperty("Birth_day")
-	 private LocalDate birthdate;
-	 
-	 public User() {
+	
+ public User() {
 		 
 	 }
+	
+
+	@Id
+	@GeneratedValue
+	 private Integer id ;
+	@Size(min = 2 ,message = "name should have  minumum 2 characters required")
+	//@JsonProperty("user_name")
+	 private String name ;
+	@Past(message = "birthdate should be in the  paste")
+	//@JsonProperty("Birth_day")
+	 private LocalDate birthdate;
+	
+	@OneToMany(mappedBy = "user")
+	@JsonIgnore
+	private List<Post> posts;
+	 
+	
 	 
 	public User(Integer id, String name, LocalDate birthdate) {
 		super();
@@ -59,6 +71,16 @@ public class User {
 
 	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
+	}
+
+
+	public List<Post> getPosts() {
+		return posts;
+	}
+
+
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 
